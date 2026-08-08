@@ -1,0 +1,687 @@
+{% extends "base.html" %}
+
+{% block title %}
+Student Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h3>
+            <i class="bi bi-person-vcard"></i>
+            Student Profile
+        </h3>
+
+        <a href="/view_students"
+           class="btn btn-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+            Back
+
+        </a>
+
+    </div>
+
+
+    <!-- Basic Information -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <i class="bi bi-person-fill"></i>
+            Basic Information
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row align-items-center">
+
+                <!-- Photo -->
+
+                <div class="col-md-3 text-center">
+
+                    {% if student.photo %}
+
+                    <img src="{{ url_for(
+                        'static',
+                        filename='uploads/' + student.photo
+                    ) }}"
+                    class="rounded-circle border"
+                    width="150"
+                    height="150"
+                    style="object-fit: cover;">
+
+                    {% else %}
+
+                    <i class="bi bi-person-circle"
+                       style="font-size: 150px;">
+                    </i>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Details -->
+
+                <div class="col-md-9">
+
+                    <h3>
+                        {{ student.name }}
+                    </h3>
+
+                    <p>
+                        <strong>Roll Number:</strong>
+                        {{ student.roll_number }}
+                    </p>
+
+                    <p>
+                        <strong>Branch:</strong>
+                        {{ student.branch }}
+                    </p>
+
+                    <p>
+                        <strong>Semester:</strong>
+                        {{ student.semester }}
+                    </p>
+
+                    <p>
+                        <strong>Phone:</strong>
+                        {{ student.phone or "N/A" }}
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong>
+                        {{ student.email or "N/A" }}
+                    </p>
+
+                    <a href="/update_student/{{ student.id }}"
+                       class="btn btn-warning btn-sm">
+
+                        <i class="bi bi-pencil-square"></i>
+                        Edit Student
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Academic Summary -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Marks
+                    </h6>
+
+                    <h2>
+                        {{ student.marks }}
+                    </h2>
+
+                    <i class="bi bi-bar-chart-fill text-primary fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Attendance
+                    </h6>
+
+                    <h2>
+                        {{ student.attendance }}%
+                    </h2>
+
+                    <div class="progress">
+
+                        <div class="progress-bar"
+                             style="width: {{ student.attendance }}%">
+
+                            {{ student.attendance }}%
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Class Rank
+                    </h6>
+
+                    <h2>
+                        #{{ rank }}
+                    </h2>
+
+                    <small class="text-muted">
+                        Out of {{ total_students }} students
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Subjects -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-success text-white">
+
+            <i class="bi bi-book-fill"></i>
+            Enrolled Subjects
+
+        </div>
+
+        <div class="card-body">
+
+            {% if enrollments %}
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Subject Code</th>
+                            <th>Subject Name</th>
+                            <th>Credits</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for enrollment in enrollments %}
+
+                        <tr>
+
+                            <td>
+                                {{ enrollment.subject.subject_code }}
+                            </td>
+
+                            <td>
+                                {{ enrollment.subject.subject_name }}
+                            </td>
+
+                            <td>
+                                {{ enrollment.subject.credits or 0 }}
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p class="text-center text-muted mb-0">
+                No Subjects Enrolled
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Marks -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-warning">
+
+            <i class="bi bi-award-fill"></i>
+            Subject-wise Marks
+
+        </div>
+
+        <div class="card-body">
+
+            {% if marks_records %}
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Subject</th>
+                            <th>Internal</th>
+                            <th>External</th>
+                            <th>Total</th>
+                            <th>Grade</th>
+                            <th>Result</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for mark in marks_records %}
+
+                        <tr>
+
+                            <td>
+                                {{ mark.subject.subject_name }}
+                            </td>
+
+                            <td>
+                                {{ mark.internal_marks }}
+                            </td>
+
+                            <td>
+                                {{ mark.external_marks }}
+                            </td>
+
+                            <td>
+                                {{ mark.total_marks }}
+                            </td>
+
+                            <td>
+                                {{ mark.grade or "N/A" }}
+                            </td>
+
+                            <td>
+
+                                {% if mark.result == "Pass" %}
+
+                                <span class="badge bg-success">
+                                    Pass
+                                </span>
+
+                                {% elif mark.result == "Fail" %}
+
+                                <span class="badge bg-danger">
+                                    Fail
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-secondary">
+                                    {{ mark.result or "N/A" }}
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p class="text-center text-muted mb-0">
+                No Marks Records Found
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Attendance -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-info text-white">
+
+            <i class="bi bi-calendar-check-fill"></i>
+            Attendance Records
+
+        </div>
+
+        <div class="card-body">
+
+            {% if attendance_records %}
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Date</th>
+                            <th>Subject</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for record in attendance_records %}
+
+                        <tr>
+
+                            <td>
+                                {{ record.attendance_date }}
+                            </td>
+
+                            <td>
+                                {{ record.subject.subject_name }}
+                            </td>
+
+                            <td>
+
+                                {% if record.status == "Present" %}
+
+                                <span class="badge bg-success">
+                                    Present
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-danger">
+                                    Absent
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p class="text-center text-muted mb-0">
+                No Attendance Records Found
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Fee Details -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-dark text-white">
+
+            <i class="bi bi-cash-stack"></i>
+            Fee Details
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row text-center mb-4">
+
+                <div class="col-md-4">
+
+                    <h6>Total Fee</h6>
+
+                    <h4>
+                        ₹ {{ student.total_fee }}
+                    </h4>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <h6>Paid Fee</h6>
+
+                    <h4 class="text-success">
+                        ₹ {{ student.paid_fee }}
+                    </h4>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <h6>Due Fee</h6>
+
+                    <h4 class="text-danger">
+                        ₹ {{ student.due_fee }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+
+            <h6>
+                Payment History
+            </h6>
+
+            {% if fee_payments %}
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Mode</th>
+                            <th>Receipt</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for payment in fee_payments %}
+
+                        <tr>
+
+                            <td>
+                                {{ payment.payment_date }}
+                            </td>
+
+                            <td>
+                                ₹ {{ payment.amount }}
+                            </td>
+
+                            <td>
+                                {{ payment.payment_mode or "N/A" }}
+                            </td>
+
+                            <td>
+                                {{ payment.receipt_number or "N/A" }}
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p class="text-muted">
+                No Fee Payments Found
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Leave History -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-secondary text-white">
+
+            <i class="bi bi-envelope-paper-fill"></i>
+            Leave History
+
+        </div>
+
+        <div class="card-body">
+
+            {% if leave_records %}
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for leave in leave_records %}
+
+                        <tr>
+
+                            <td>
+                                {{ leave.from_date }}
+                            </td>
+
+                            <td>
+                                {{ leave.to_date }}
+                            </td>
+
+                            <td>
+                                {{ leave.reason or "N/A" }}
+                            </td>
+
+                            <td>
+
+                                {% if leave.status == "Approved" %}
+
+                                <span class="badge bg-success">
+                                    Approved
+                                </span>
+
+                                {% elif leave.status == "Rejected" %}
+
+                                <span class="badge bg-danger">
+                                    Rejected
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <p class="text-center text-muted mb-0">
+                No Leave Records Found
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

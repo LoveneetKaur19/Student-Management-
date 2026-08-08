@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Enrollment
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+
+                <i class="bi bi-journal-check"></i>
+
+                Add Enrollment
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Student
+
+                    </label>
+
+                    <select
+                        name="student_id"
+                        class="form-select"
+                        required>
+
+                        <option value="">
+                            Select Student
+                        </option>
+
+                        {% for student in students %}
+
+                        <option value="{{ student.id }}">
+
+                            {{ student.roll_number }}
+                            -
+                            {{ student.name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Subject
+
+                    </label>
+
+                    <select
+                        name="subject_id"
+                        class="form-select"
+                        required>
+
+                        <option value="">
+                            Select Subject
+                        </option>
+
+                        {% for subject in subjects %}
+
+                        <option value="{{ subject.id }}">
+
+                            {{ subject.subject_code }}
+                            -
+                            {{ subject.subject_name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <button
+                    class="btn btn-success">
+
+                    <i class="bi bi-check-circle"></i>
+
+                    Save Enrollment
+
+                </button>
+
+                <a href="/view_enrollments"
+                   class="btn btn-secondary">
+
+                    View Enrollments
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

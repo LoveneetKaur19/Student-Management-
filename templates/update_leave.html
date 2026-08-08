@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}
+Update Leave
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+<div class="card shadow">
+
+<div class="card-header bg-warning">
+
+<h3>
+
+Update Leave
+
+</h3>
+
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label>Student</label>
+
+<select
+name="student_id"
+class="form-select"
+required>
+
+{% for student in students %}
+
+<option
+value="{{ student.id }}"
+{% if leave.student_id == student.id %}
+selected
+{% endif %}>
+
+{{ student.roll_number }}
+-
+{{ student.name }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label>From Date</label>
+
+<input
+type="date"
+name="from_date"
+class="form-control"
+value="{{ leave.from_date }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>To Date</label>
+
+<input
+type="date"
+name="to_date"
+class="form-control"
+value="{{ leave.to_date }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>Reason</label>
+
+<textarea
+name="reason"
+class="form-control"
+rows="4"
+required>{{ leave.reason }}</textarea>
+
+</div>
+
+<div class="mb-3">
+
+<label>Status</label>
+
+<select
+name="status"
+class="form-select">
+
+<option value="Pending"
+{% if leave.status=="Pending" %}selected{% endif %}>
+Pending
+</option>
+
+<option value="Approved"
+{% if leave.status=="Approved" %}selected{% endif %}>
+Approved
+</option>
+
+<option value="Rejected"
+{% if leave.status=="Rejected" %}selected{% endif %}>
+Rejected
+</option>
+
+</select>
+
+</div>
+
+<button
+class="btn btn-success">
+
+Update
+
+</button>
+
+<a
+href="/view_leave"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

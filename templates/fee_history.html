@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}
+Fee History
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2>
+
+            <i class="bi bi-cash-stack"></i>
+
+            Fee Payment History
+
+        </h2>
+
+        <a href="/add_fee"
+           class="btn btn-success">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Add Fee
+
+        </a>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Student</th>
+
+                        <th>Amount</th>
+
+                        <th>Payment Date</th>
+
+                        <th>Payment Mode</th>
+
+                        <th>Receipt No.</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% if payments %}
+
+                    {% for payment in payments %}
+
+                    <tr>
+
+                        <td>{{ payment.id }}</td>
+
+                        <td>{{ payment.student.name }}</td>
+
+                        <td>₹ {{ payment.amount }}</td>
+
+                        <td>{{ payment.payment_date }}</td>
+
+                        <td>{{ payment.payment_mode }}</td>
+
+                        <td>{{ payment.receipt_number }}</td>
+
+                        <td>
+
+                            <a href="/update_fee/{{ payment.id }}"
+                               class="btn btn-warning btn-sm">
+
+                                <i class="bi bi-pencil-square"></i>
+
+                                Edit
+
+                            </a>
+
+                            <a href="/delete_fee/{{ payment.id }}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Delete this payment?')">
+
+                                <i class="bi bi-trash"></i>
+
+                                Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="7"
+                            class="text-center text-muted">
+
+                            No Fee Records Found
+
+                        </td>
+
+                    </tr>
+
+                {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

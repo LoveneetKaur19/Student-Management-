@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}
+Fee Defaulters
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+<h2>
+
+<i class="bi bi-exclamation-triangle-fill text-danger"></i>
+
+Fee Defaulters
+
+</h2>
+
+<a href="/fee_history"
+class="btn btn-primary">
+
+<i class="bi bi-cash-stack"></i>
+
+Fee History
+
+</a>
+
+</div>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-bordered table-hover">
+
+<thead class="table-danger">
+
+<tr>
+
+<th>Roll No</th>
+
+<th>Name</th>
+
+<th>Branch</th>
+
+<th>Total Fee</th>
+
+<th>Paid Fee</th>
+
+<th>Due Fee</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% if students %}
+
+{% for student in students %}
+
+<tr>
+
+<td>
+
+{{ student.roll_number }}
+
+</td>
+
+<td>
+
+{{ student.name }}
+
+</td>
+
+<td>
+
+{{ student.branch }}
+
+</td>
+
+<td>
+
+₹ {{ student.total_fee }}
+
+</td>
+
+<td>
+
+₹ {{ student.paid_fee }}
+
+</td>
+
+<td class="text-danger fw-bold">
+
+₹ {{ student.due_fee }}
+
+</td>
+
+<td>
+
+<span class="badge bg-danger">
+
+{{ student.fee_status }}
+
+</span>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+{% else %}
+
+<tr>
+
+<td colspan="7"
+class="text-center text-success">
+
+🎉 No Fee Defaulters
+
+</td>
+
+</tr>
+
+{% endif %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

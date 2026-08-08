@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}
+Leave List
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="d-flex justify-content-between mb-3">
+
+<h2>
+
+<i class="bi bi-calendar-x"></i>
+
+Leave Records
+
+</h2>
+
+<a
+href="/add_leave"
+class="btn btn-success">
+
+<i class="bi bi-plus-circle"></i>
+
+Add Leave
+
+</a>
+
+</div>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-bordered table-hover">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>ID</th>
+
+<th>Student</th>
+
+<th>From</th>
+
+<th>To</th>
+
+<th>Reason</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for leave in leaves %}
+
+<tr>
+
+<td>{{ leave.id }}</td>
+
+<td>{{ leave.student.name }}</td>
+
+<td>{{ leave.from_date }}</td>
+
+<td>{{ leave.to_date }}</td>
+
+<td>{{ leave.reason }}</td>
+
+<td>
+
+{% if leave.status=="Approved" %}
+
+<span class="badge bg-success">
+
+Approved
+
+</span>
+
+{% elif leave.status=="Rejected" %}
+
+<span class="badge bg-danger">
+
+Rejected
+
+</span>
+
+{% else %}
+
+<span class="badge bg-warning text-dark">
+
+Pending
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+<a
+href="/update_leave/{{ leave.id }}"
+class="btn btn-warning btn-sm">
+
+<i class="bi bi-pencil"></i>
+
+Edit
+
+</a>
+
+<a
+href="/delete_leave/{{ leave.id }}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete Leave?')">
+
+<i class="bi bi-trash"></i>
+
+Delete
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

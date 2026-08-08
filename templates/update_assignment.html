@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}
+Update Assignment
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+<div class="card shadow">
+
+<div class="card-header bg-warning">
+
+<h3>
+
+Update Assignment
+
+</h3>
+
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label>Title</label>
+
+<input
+type="text"
+name="title"
+class="form-control"
+value="{{ assignment.title }}"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>Subject</label>
+
+<select
+name="subject_id"
+class="form-select"
+required>
+
+{% for subject in subjects %}
+
+<option
+value="{{ subject.id }}"
+{% if assignment.subject_id==subject.id %}
+selected
+{% endif %}>
+
+{{ subject.subject_code }}
+-
+{{ subject.subject_name }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label>Description</label>
+
+<textarea
+name="description"
+class="form-control"
+rows="4">{{ assignment.description }}</textarea>
+
+</div>
+
+<div class="mb-3">
+
+<label>Due Date</label>
+
+<input
+type="date"
+name="due_date"
+class="form-control"
+value="{{ assignment.due_date }}"
+required>
+
+</div>
+
+<button class="btn btn-success">
+
+Update Assignment
+
+</button>
+
+<a
+href="/view_assignment"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}
+View Students
+{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2>
+        <i class="bi bi-people-fill"></i>
+        Student List
+    </h2>
+
+    <a href="/add_student" class="btn btn-success">
+
+        <i class="bi bi-person-plus-fill"></i>
+
+        Add Student
+
+    </a>
+
+</div>
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        {% if students %}
+
+        <div class="table-responsive">
+
+            <table class="table table-hover table-bordered align-middle">
+
+                <thead class="table-dark">
+
+                <tr>
+
+                    <th>Photo</th>
+
+                    <th>Roll No</th>
+
+                    <th>Name</th>
+
+                    <th>Branch</th>
+
+                    <th>Semester</th>
+
+                    <th>Marks</th>
+
+                    <th>Attendance</th>
+
+                    <th>Fee</th>
+
+                    <th>Status</th>
+
+                    <th width="220">Action</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for student in students %}
+
+                <tr>
+
+                    <td>
+
+                        {% if student.photo %}
+
+                        <img src="{{ url_for('static',
+                        filename='uploads/' + student.photo) }}"
+                             width="60"
+                             height="60"
+                             class="rounded-circle border">
+
+                        {% else %}
+
+                        <img src="{{ url_for('static',
+                        filename='uploads/default.png') }}"
+                             width="60"
+                             height="60"
+                             class="rounded-circle border">
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>{{ student.roll_number }}</td>
+
+                    <td>{{ student.name }}</td>
+
+                    <td>{{ student.branch }}</td>
+
+                    <td>{{ student.semester }}</td>
+
+                    <td>
+
+                        {{ student.marks }}
+
+                    </td>
+
+                    <td>
+
+                        {{ student.attendance }} %
+
+                    </td>
+
+                    <td>
+
+                        {% if student.fee_status=="Paid" %}
+
+                        <span class="badge bg-success">
+
+                            Paid
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-danger">
+
+                            Pending
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {% if student.status=="Excellent" %}
+
+                        <span class="badge bg-success">
+
+                            ⭐ Excellent
+
+                        </span>
+
+                        {% elif student.status=="Good" %}
+
+                        <span class="badge bg-primary">
+
+                            Good
+
+                        </span>
+
+                        {% elif student.status=="Average" %}
+
+                        <span class="badge bg-warning text-dark">
+
+                            Average
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-danger">
+
+                            Needs Improvement
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <a href="/student_profile/{{ student.id }}"
+                           class="btn btn-dark btn-sm">
+
+                            <i class="bi bi-person"></i>
+
+                        </a>
+
+                        <a href="/update_student/{{ student.id }}"
+                           class="btn btn-warning btn-sm">
+
+                            <i class="bi bi-pencil-square"></i>
+
+                        </a>
+
+                        <a href="/delete_student/{{ student.id }}"
+                           class="btn btn-danger btn-sm"
+
+                           onclick="return confirm(
+                           'Delete this student?')">
+
+                            <i class="bi bi-trash"></i>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="alert alert-info text-center">
+
+            <h4>No Student Found</h4>
+
+            <a href="/add_student"
+               class="btn btn-primary mt-2">
+
+                Add First Student
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,733 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Welcome Section -->
+
+    <div class="alert alert-primary shadow-sm mb-4">
+
+        <h3>
+            <i class="bi bi-speedometer2"></i>
+            Dashboard
+        </h3>
+
+        <p class="mb-0">
+            Welcome to <strong>Student Management System</strong>.
+            Manage Students, Subjects, Attendance, Marks,
+            Fees, Assignments and Leave from one place.
+        </p>
+
+    </div>
+
+    <!-- Statistics Cards -->
+
+    <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Total Students
+                    </h6>
+
+                    <h2>{{ total_students }}</h2>
+
+                    <i class="bi bi-people-fill text-primary fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Total Subjects
+                    </h6>
+
+                    <h2>{{ total_subjects }}</h2>
+
+                    <i class="bi bi-book-fill text-success fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+
+                        Total Branches
+
+                    </h6>
+
+                    <h2>
+
+                        {{ total_branches }}
+
+                    </h2>
+
+                    <i class="bi bi-diagram-3-fill text-primary fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Total Enrollments
+                    </h6>
+
+                    <h2>{{ total_enrollments }}</h2>
+
+                    <i class="bi bi-journal-check text-warning fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Attendance Records
+                    </h6>
+
+                    <h2>{{ total_attendance }}</h2>
+
+                    <i class="bi bi-calendar-check text-info fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Assignments
+                    </h6>
+
+                    <h2>{{ total_assignments }}</h2>
+
+                    <i class="bi bi-file-earmark-text text-secondary fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Pending Leaves
+                    </h6>
+
+                    <h2>{{ pending_leaves }}</h2>
+
+                    <i class="bi bi-envelope-paper-fill text-danger fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Total Fee
+                    </h6>
+
+                    <h2>₹ {{ total_fee }}</h2>
+
+                    <i class="bi bi-wallet2 text-dark fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Fee Collected
+                    </h6>
+
+                    <h2>₹ {{ total_fee_collected }}</h2>
+
+                    <i class="bi bi-cash-stack text-success fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Due Fee
+                    </h6>
+
+                    <h2>₹ {{ total_due_fee }}</h2>
+
+                    <i class="bi bi-exclamation-circle text-danger fs-2"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+
+    <div class="row mt-5">
+
+        <div class="col">
+
+            <h4>
+                Quick Actions
+            </h4>
+
+            <hr>
+
+        </div>
+
+    </div>
+
+    <div class="row g-3">
+
+        <div class="col-md-3">
+
+            <a href="/add_student"
+               class="btn btn-primary w-100">
+
+                <i class="bi bi-person-plus-fill"></i>
+
+                Add Student
+
+            </a>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <a href="/add_subject"
+               class="btn btn-success w-100">
+
+                <i class="bi bi-book-fill"></i>
+
+                Add Subject
+
+            </a>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <a href="/add_fee"
+               class="btn btn-warning w-100">
+
+                <i class="bi bi-cash-stack"></i>
+
+                Add Fee
+
+            </a>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <a href="/add_assignment"
+               class="btn btn-info text-white w-100">
+
+                <i class="bi bi-file-earmark-plus"></i>
+
+                Add Assignment
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <hr class="my-5">
+
+<div class="row mb-4">
+
+    <div class="col-lg-12">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-warning text-dark">
+
+                <i class="bi bi-trophy-fill"></i>
+
+                Top Student
+
+            </div>
+
+            <div class="card-body">
+
+                {% if top_student %}
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-2 text-center">
+
+                        {% if top_student.photo %}
+
+                        <img src="{{ url_for('static', filename='uploads/' + top_student.photo) }}"
+                             class="rounded-circle"
+                             width="100"
+                             height="100">
+
+                        {% else %}
+
+                        <i class="bi bi-person-circle"
+                           style="font-size:80px;"></i>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="col-md-10">
+
+                        <h4 class="mb-2">
+
+                            🏆 {{ top_student.name }}
+
+                        </h4>
+
+                        <p class="mb-1">
+
+                            <strong>Roll No :</strong>
+
+                            {{ top_student.roll_number }}
+
+                        </p>
+
+                        <p class="mb-1">
+
+                            <strong>Branch :</strong>
+
+                            {{ top_student.branch }}
+
+                        </p>
+
+                        <p class="mb-1">
+
+                            <strong>Semester :</strong>
+
+                            {{ top_student.semester }}
+
+                        </p>
+
+                        <h5 class="text-success">
+
+                            Marks : {{ top_student.marks }}
+
+                        </h5>
+
+                    </div>
+
+                </div>
+
+                {% else %}
+
+                <p class="text-center">
+
+                    No Student Found
+
+                </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- Recent Tables Start -->
+
+<div class="row">
+
+    <!-- Recent Students -->
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-primary text-white">
+
+                <i class="bi bi-people-fill"></i>
+
+                Recent Students
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Roll No</th>
+                            <th>Name</th>
+                            <th>Branch</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% if recent_students %}
+
+                        {% for student in recent_students %}
+
+                        <tr>
+
+                            <td>{{ student.roll_number }}</td>
+
+                            <td>{{ student.name }}</td>
+
+                            <td>{{ student.branch }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="3" class="text-center">
+
+                                No Students Found
+
+                            </td>
+
+                        </tr>
+
+                    {% endif %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Fee Defaulters -->
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-danger text-white">
+
+                <i class="bi bi-exclamation-triangle-fill"></i>
+
+                Fee Defaulters
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Name</th>
+
+                            <th>Due Fee</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% if fee_defaulters %}
+
+                        {% for student in fee_defaulters %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ student.name }}
+
+                            </td>
+
+                            <td class="text-danger fw-bold">
+
+                                ₹ {{ student.due_fee }}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="2" class="text-center text-success">
+
+                                No Fee Defaulters 🎉
+
+                            </td>
+
+                        </tr>
+
+                    {% endif %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- leave requests -->
+
+<div class="row mt-4">
+
+    <div class="col-lg-12">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-success text-white">
+
+                <i class="bi bi-envelope-paper-fill"></i>
+
+                Recent Leave Requests
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Student</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for leave in recent_leaves %}
+
+                        <tr>
+
+                            <td>{{ leave.student.name }}</td>
+
+                            <td>{{ leave.from_date }}</td>
+
+                            <td>{{ leave.to_date }}</td>
+
+                            <td>
+
+                                {% if leave.status=="Approved" %}
+
+                                    <span class="badge bg-success">
+
+                                        Approved
+
+                                    </span>
+
+                                {% elif leave.status=="Rejected" %}
+
+                                    <span class="badge bg-danger">
+
+                                        Rejected
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        Pending
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Branch Distribution -->
+
+<div class="row mt-4">
+
+    <div class="col-lg-6">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-primary text-white">
+
+                <i class="bi bi-diagram-3-fill"></i>
+
+                Branch Distribution
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                {% for branch, count in branch_data.items() %}
+
+
+                <div class="mb-3">
+
+
+                    <div class="d-flex justify-content-between">
+
+                        <span>
+                            {{ branch }}
+                        </span>
+
+                        <span>
+                            {{ count }} Students
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress">
+
+                        <div class="progress-bar"
+                            role="progressbar"
+                            style="width: {{ (count / total_students * 100) if total_students > 0 else 0 }}%">
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+</div>
+
+{% endblock %}

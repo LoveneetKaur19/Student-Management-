@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Leave
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white">
+
+<h3>
+
+<i class="bi bi-envelope-plus"></i>
+
+Add Leave
+
+</h3>
+
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Student
+
+</label>
+
+<select
+name="student_id"
+class="form-select"
+required>
+
+<option value="">
+
+Select Student
+
+</option>
+
+{% for student in students %}
+
+<option value="{{ student.id }}">
+
+{{ student.roll_number }} -
+{{ student.name }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+From Date
+
+</label>
+
+<input
+type="date"
+name="from_date"
+class="form-control"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+To Date
+
+</label>
+
+<input
+type="date"
+name="to_date"
+class="form-control"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Reason
+
+</label>
+
+<textarea
+name="reason"
+class="form-control"
+rows="4"
+required></textarea>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Status
+
+</label>
+
+<select
+name="status"
+class="form-select">
+
+<option value="Pending">
+
+Pending
+
+</option>
+
+<option value="Approved">
+
+Approved
+
+</option>
+
+<option value="Rejected">
+
+Rejected
+
+</option>
+
+</select>
+
+</div>
+
+<button
+class="btn btn-success">
+
+<i class="bi bi-check-circle"></i>
+
+Save
+
+</button>
+
+<a
+href="/view_leave"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

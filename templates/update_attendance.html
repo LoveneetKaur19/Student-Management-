@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}
+Update Attendance
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-warning">
+
+            <h3>
+
+                <i class="bi bi-pencil-square"></i>
+
+                Update Attendance
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Student
+                    </label>
+
+                    <select
+                        name="student_id"
+                        class="form-select"
+                        required>
+
+                        {% for student in students %}
+
+                        <option
+                            value="{{ student.id }}"
+                            {% if student.id==attendance.student_id %}
+                            selected
+                            {% endif %}>
+
+                            {{ student.roll_number }}
+                            -
+                            {{ student.name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Subject
+                    </label>
+
+                    <select
+                        name="subject_id"
+                        class="form-select"
+                        required>
+
+                        {% for subject in subjects %}
+
+                        <option
+                            value="{{ subject.id }}"
+                            {% if subject.id==attendance.subject_id %}
+                            selected
+                            {% endif %}>
+
+                            {{ subject.subject_code }}
+                            -
+                            {{ subject.subject_name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Attendance Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="attendance_date"
+                        class="form-control"
+                        value="{{ attendance.attendance_date }}"
+                        required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select
+                        name="status"
+                        class="form-select">
+
+                        <option
+                            value="Present"
+                            {% if attendance.status=="Present" %}
+                            selected
+                            {% endif %}>
+
+                            Present
+
+                        </option>
+
+                        <option
+                            value="Absent"
+                            {% if attendance.status=="Absent" %}
+                            selected
+                            {% endif %}>
+
+                            Absent
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button
+                    class="btn btn-primary">
+
+                    Update Attendance
+
+                </button>
+
+                <a href="/view_attendance"
+                   class="btn btn-secondary">
+
+                    Back
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

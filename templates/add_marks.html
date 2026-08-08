@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Marks
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+
+                <i class="bi bi-award-fill"></i>
+
+                Add Marks
+
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Student
+
+                    </label>
+
+                    <select
+                        name="student_id"
+                        class="form-select"
+                        required>
+
+                        <option value="">Select Student</option>
+
+                        {% for student in students %}
+
+                        <option value="{{ student.id }}">
+
+                            {{ student.roll_number }} - {{ student.name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Subject
+
+                    </label>
+
+                    <select
+                        name="subject_id"
+                        class="form-select"
+                        required>
+
+                        <option value="">Select Subject</option>
+
+                        {% for subject in subjects %}
+
+                        <option value="{{ subject.id }}">
+
+                            {{ subject.subject_code }} - {{ subject.subject_name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Internal Marks (0-30)
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="internal_marks"
+                        class="form-control"
+                        min="0"
+                        max="30"
+                        step="0.5"
+                        required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        External Marks (0-70)
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="external_marks"
+                        class="form-control"
+                        min="0"
+                        max="70"
+                        step="0.5"
+                        required>
+
+                </div>
+
+                <button class="btn btn-success">
+
+                    <i class="bi bi-check-circle"></i>
+
+                    Save Marks
+
+                </button>
+
+                <a href="/view_marks"
+                   class="btn btn-secondary">
+
+                    View Marks
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
